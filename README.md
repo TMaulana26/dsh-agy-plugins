@@ -1,6 +1,9 @@
-# DeepSeek Harness Plugins (`@local/agy-provider` & `@local/provider-usage`)
+# DeepSeek Harness Plugins (`@local/agy-provider`, `@local/provider-usage`, `@local/skills-manager`)
 
-Paket ekstensi resmi komunitas untuk **DeepSeek Harness (DSH)** yang menambahkan dukungan native **Antigravity CLI (`agy`) Multi-Account Provider** serta **Live Quota & Rate Limit Telemetry** di Composer Dock, Right Sidebar (`Ctrl+Alt+B`), dan menu Settings.
+Paket ekstensi resmi komunitas untuk **DeepSeek Harness (DSH)** yang menambahkan:
+1. **`@local/agy-provider`**: Dukungan native **Antigravity CLI (`agy`) Multi-Account Provider** (26 model standar + mode agen otonom `[agy]`).
+2. **`@local/provider-usage`**: **Live Quota & Rate Limit Telemetry** di Composer Dock, Right Sidebar (`Ctrl+Alt+B`), dan menu Settings.
+3. **`@local/skills-manager`**: **Skills Manager, Local Importer (Antigravity & Claude Code) & Online Skills Marketplace (`skills.sh` + GitHub)** di menu **Settings ➡️ Skills** dan Right Sidebar (`Ctrl+Alt+S`).
 
 ---
 
@@ -22,9 +25,23 @@ Paket ekstensi resmi komunitas untuk **DeepSeek Harness (DSH)** yang menambahkan
   3. **Settings ➡️ Quota & Usage**: Dashboard lengkap kuota per model dan jadwal reset.
 - Mendukung pemantauan kuota otomatis untuk **Antigravity CLI (`agy`)**, **9Router**, dan **Dattio AI**.
 
+### 3. `@local/skills-manager` — Skills Manager, Local Importer & Online Registry
+- Muncul langsung di **Settings ➡️ Skills** serta di **Right Sidebar (`Ctrl+Alt+S`)** dengan 3 tab utama:
+  1. **Installed Skills**:
+     - Kelola semua skill yang terdaftar di DSH.
+     - Terapkan skill ke **Global (`~/.dsh/skills`)** dan/atau ke **beberapa Workspace tertentu (`<workspace>/.dsh/skills`)** hanya dengan 1 klik (langsung aktif hot-reload tanpa perlu restart DSH).
+     - Toggle **Auto-Invoke** (`disable-model-invocation`), edit isi `SKILL.md` secara langsung, atau buat skill baru (`+ New Skill`).
+  2. **Import (Antigravity & Claude Code)**:
+     - Mendeteksi otomatis seluruh skill lokal dari **Antigravity** (`~/.gemini/config/skills`, `~/.gemini/antigravity/builtin/skills`, `~/.gemini/config/plugins/*/skills`) dan **Claude Code** (`~/.claude/skills`).
+     - Impor satuan maupun sekaligus (*batch import*) beserta folder pendukungnya (`scripts/`, `references/`, `assets/`, `examples/`) ke Global atau Workspace pilihan.
+  3. **Explore & Search Online (`skills.sh` + GitHub)**:
+     - Telusuri daftar skill **Popular (All-Time)**, **Trending (24h)**, dan **Hot (Surging)** dari direktori resmi `https://skills.sh`.
+     - Telusuri skill **Newly Created** yang baru dibuat di komunitas lewat GitHub Search API.
+     - Cari lebih dari **50.000+ Agent Skills** menggunakan kolom pencarian dan pasang dengan **1 klik (`Install`)** ke Global atau Workspace tertentu.
+
 ---
 
-## 🚀 Cara Instalasi (Windows)
+## 🚀 Cara Instalasi / Update (Windows)
 
 ### Prasyarat
 1. **DeepSeek Harness** sudah terinstal dan pernah dijalankan minimal 1 kali.
@@ -39,18 +56,9 @@ cd dsh-agy-plugins
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
+*(Jika sebelumnya sudah pernah clone, cukup jalankan `git pull` lalu `powershell -ExecutionPolicy Bypass -File .\install.ps1`)*
+
 Skrip `install.ps1` akan otomatis:
-1. Menghubungkan `@local/agy-provider` dan `@local/provider-usage` ke profil `~/.dsh/profiles/desktop`.
-2. Memperbarui `package.json` profil DeepSeek Harness Anda.
+1. Menghubungkan `@local/agy-provider`, `@local/provider-usage`, dan `@local/skills-manager` ke profil `~/.dsh/profiles/desktop`.
+2. Memperbarui `package.json` profil DeepSeek Harness Anda (UTF-8 tanpa BOM).
 3. Memuat ulang aplikasi **DeepSeek Harness** secara otomatis.
-
----
-
-## 📖 Cara Penggunaan Setelah Instalasi
-
-1. Buka **DeepSeek Harness** ➡️ **Settings (`Ctrl+,`)** ➡️ **Models**.
-2. Gulir ke bagian **Antigravity CLI (agy) — Accounts**:
-   - Klik **`Sync CLI`** jika Anda sudah pernah login `agy` di terminal, atau
-   - Klik **`+ Add Account`** untuk login akun Google baru lewat browser, lalu tempelkan kode autentikasi yang muncul.
-3. Setelah akun berstatus **ACTIVE**, pilih model `Gemini 4 Argon`, `Claude Opus 5.5`, atau varian **`[agy]`** langsung dari pemilih model di bawah kolom chat.
-4. Klik indikator kuota di bawah kolom chat (atau tekan **`Ctrl+Alt+B`**) untuk memantau sisa kuota per model secara langsung!

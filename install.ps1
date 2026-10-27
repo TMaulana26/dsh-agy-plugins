@@ -3,7 +3,7 @@ $ErrorActionPreference = "Stop"
 
 Write-Host "=====================================================" -ForegroundColor Cyan
 Write-Host "  DeepSeek Harness Plugins Installer" -ForegroundColor Cyan
-Write-Host "  (@local/agy-provider & @local/provider-usage)" -ForegroundColor Cyan
+Write-Host "  (@local/agy-provider, @local/provider-usage, @local/skills-manager)" -ForegroundColor Cyan
 Write-Host "=====================================================" -ForegroundColor Cyan
 
 $repoRoot = $PSScriptRoot
@@ -21,7 +21,7 @@ if (-not (Test-Path $localModulesDir)) {
     New-Item -ItemType Directory -Path $localModulesDir -Force | Out-Null
 }
 
-$plugins = @("provider-usage", "agy-provider")
+$plugins = @("provider-usage", "agy-provider", "skills-manager")
 foreach ($plugin in $plugins) {
     $srcPath = Join-Path $repoRoot $plugin
     $destPath = Join-Path $localModulesDir $plugin

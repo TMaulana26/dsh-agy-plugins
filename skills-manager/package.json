@@ -1,0 +1,36 @@
+{
+  "name": "@local/skills-manager",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Comprehensive Skills Manager for DeepSeek Harness: manage Global & Workspace skills, import 1-click from Antigravity & Claude Code, and explore/install popular, trending, and newly created skills from skills.sh & GitHub.",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-sidebar-right",
+        "@deepseek-ai/dsh-client-ui-layout"
+      ]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# Skills Manager bundle for DeepSeek Harness.
+# Provides `/api/skills-manager` backend route, `skills_manager` agent tool,
+# and Settings -> Skills + Right Sidebar UI.
+- insert:
+    - id: skills-manager
+      name: "@local/skills-manager"
+      config:
+        enableMarketplace: true
+        cacheSeconds: 300

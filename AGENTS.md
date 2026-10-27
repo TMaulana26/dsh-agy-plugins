@@ -1,4 +1,4 @@
-# AGENTS.md — DeepSeek Harness Plugins (`@local/provider-usage` & `@local/agy-provider`)
+# AGENTS.md — DeepSeek Harness Plugins (`@local/provider-usage`, `@local/agy-provider` & `@local/skills-manager`)
 
 ## 1. Swarm Context & Onboarding (Read First)
 
@@ -48,6 +48,17 @@ This workspace contains two integrated plugin bundles for **DeepSeek Harness (DS
   - `provider-usage/package.json` — package exports and `dsh.client.inject` dependencies.
   - `provider-usage/cordis.patch.yml` — declarative Cordis loader insertion and default plugin config.
   - `provider-usage/locale/en.json` & `provider-usage/locale/id.json` — bundle metadata translations (`en` and `id`).
+
+### C. `@local/skills-manager` (`skills-manager/`) — Skills Manager, Local Importer & Online Registry
+- **Host Runtime (`skills-manager/index.js`)**:
+  - Exposes `GET` & `POST /api/skills-manager` and the `skills_manager` in-chat LLM tool.
+  - Discovers registered DSH workspaces from `~/.dsh/storages/workspace.json`.
+  - Scans and manages installed skills across Global (`~/.dsh/skills`, `~/.agents/skills`) and Workspace (`<workspace>/.dsh/skills`, `<workspace>/.agents/skills`) directories with full folder copy (`SKILL.md` + `scripts/`, `references/`, `assets/`, `examples/`) and strict kebab-case `name` normalization.
+  - Auto-discovers importable local skills from **Antigravity** (`~/.gemini/config/skills`, `~/.gemini/antigravity/builtin/skills`, `~/.gemini/config/plugins/*/skills`) and **Claude Code** (`~/.claude/skills`).
+  - Queries `https://skills.sh` (`Popular`, `Trending 24h`, `Hot`), `https://skills.sh/api/search?q=...` (50,000+ skills), and GitHub Search API (`Newly Created` + repository fallback) and installs remote skills from GitHub (`owner/repo/skillId`) into Global and/or selected Workspaces.
+- **Client Runtime (`skills-manager/client.js`)**:
+  - Registers **Settings -> Skills** (`settings.section`, id `skills-manager`, order `11`) and a **Right Sidebar Tab** (`@local/skills-manager/tab`, kind `skills-manager`, shortcut `Ctrl+Alt+S`).
+  - Provides 3 tabs: **Installed**, **Import (Antigravity / Claude)**, and **Explore & Search Online**, plus inline `SKILL.md` editor and `+ New Skill` modal.
 
 ---
 
