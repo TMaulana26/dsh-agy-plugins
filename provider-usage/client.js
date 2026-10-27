@@ -542,6 +542,8 @@ window.__ModuleLoader__.load({
           quotaStore.failure = {
             message: typeof data?.error === 'string' ? data.error : null,
             code: typeof data?.code === 'string' ? data.code : 'UNKNOWN',
+            provider: typeof data?.provider === 'string' ? data.provider : null,
+            configuredProviders: Array.isArray(data?.configuredProviders) ? data.configuredProviders : [],
           }
         }
       } catch (error) {
@@ -617,12 +619,15 @@ window.__ModuleLoader__.load({
       const live = snapshot !== null && snapshot.ok === true
       const isAggregated = live && snapshot.type === 'aggregated'
 
-      const configured = Array.isArray(snapshot?.configuredProviders) ? snapshot.configuredProviders : []
+      const configured = Array.isArray(snapshot?.configuredProviders) && snapshot.configuredProviders.length > 0
+        ? snapshot.configuredProviders
+        : (Array.isArray(failure?.configuredProviders) ? failure.configuredProviders : [])
 
       // Top Toolbar: Provider tabs + Refresh
-      const switcherTabs = configured.length > 1 ? h('div', { key: 'sw', className: 'dpu-switcher' },
+      const switcherTabs = configured.length >= 1 ? h('div', { key: 'sw', className: 'dpu-switcher' },
         configured.map((p) => {
-          const active = (selectedProvider === p.id) || (!selectedProvider && snapshot?.provider === p.id)
+          const activeProv = snapshot?.provider || failure?.provider
+          const active = (selectedProvider === p.id) || (!selectedProvider && activeProv === p.id)
           const label = p.displayName || p.id
           const provCount = active && isAggregated && typeof snapshot?.totalProviders === 'number' && snapshot.totalProviders > 0
             ? `${snapshot.totalProviders} ${t('providers')}`

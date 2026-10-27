@@ -75,7 +75,29 @@ function conventionalApiKeyRef(provider) {
 }
 
 /**
- * Enumerate all configured providers found in the settings projection.
+ * Check whether Antigravity CLI (`agy`) is installed or configured on this machine.
+ * @returns {boolean}
+ */
+function isAgyCliAvailable() {
+  const home = homedir()
+  const candidates = [
+    process.env.AGY_BIN_PATH,
+    join(home, '.dsh', 'storages', 'agy-provider-accounts.json'),
+    process.platform === 'win32' ? join(home, 'AppData', 'Local', 'agy', 'bin', 'agy.exe') : '',
+    process.platform === 'win32' ? join(home, '.gemini', 'antigravity-cli', 'bin', 'agy.exe') : '',
+    join(home, '.gemini', 'antigravity-cli', 'bin', 'agy'),
+    join(home, '.local', 'bin', 'agy'),
+    '/usr/local/bin/agy',
+  ].filter((p) => typeof p === 'string' && p.length > 0)
+
+  for (const candidate of candidates) {
+    if (existsSync(candidate)) return true
+  }
+  return false
+}
+
+/**
+ * Enumerate all quota-capable configured providers found in the settings projection and local CLI adapters.
  * @param {any} ctx - plugin context.
  * @returns {Array<{ id: string, displayName: string, baseURL?: string, apiKeyEnv?: string }>} list.
  */
@@ -92,6 +114,7 @@ function discoverAllProviders(ctx) {
           if (providers !== null && typeof providers === 'object') {
             for (const [id, entry] of Object.entries(providers)) {
               if (!entry || typeof entry !== 'object') continue
+              if (id === 'deepseek-account') continue
               if (!map.has(id)) {
                 map.set(id, {
                   id,
@@ -109,24 +132,12 @@ function discoverAllProviders(ctx) {
     }
   }
 
-  // Also include directly registered LLM adapters (such as `agy-cli` from @local/agy-provider)
-  const llm = ctx.get('llm')
-  if (llm !== undefined && typeof llm.listProviders === 'function') {
-    try {
-      const registered = llm.listProviders()
-      if (Array.isArray(registered)) {
-        for (const item of registered) {
-          if (item && typeof item.id === 'string' && item.id && !map.has(item.id)) {
-            map.set(item.id, {
-              id: item.id,
-              displayName: typeof item.name === 'string' && item.name ? item.name : item.id,
-            })
-          }
-        }
-      }
-    } catch {
-      /* ignore */
-    }
+  // Always include Antigravity CLI (`agy-cli`) when installed or configured on the system
+  if (!map.has('agy-cli') && isAgyCliAvailable()) {
+    map.set('agy-cli', {
+      id: 'agy-cli',
+      displayName: 'Antigravity CLI (agy)',
+    })
   }
 
   return Array.from(map.values())
@@ -203,19 +214,25 @@ function resolveActiveProvider(ctx, config, requested) {
   if (typeof config.provider === 'string' && config.provider !== 'auto' && config.provider.trim().length > 0) {
     return config.provider.trim()
   }
+  const all = discoverAllProviders(ctx)
   const defaultModel = ctx.get('agentDefaultModel')
   if (defaultModel !== undefined && typeof defaultModel.currentSelection === 'function') {
     try {
       const sel = defaultModel.currentSelection()
-      if (typeof sel?.provider === 'string' && sel.provider.length > 0) {
-        return sel.provider
+      const candidate = typeof sel?.provider === 'string' ? sel.provider.trim() : ''
+      if (candidate.length > 0 && candidate !== 'deepseek-account') {
+        const isAgy = candidate === 'agy-cli' || candidate.startsWith('agy')
+        const hasTarget = isAgy || all.some((p) => p.id === candidate) || resolveTarget(ctx, config, candidate).candidateUrls.length > 0
+        if (hasTarget) {
+          return candidate
+        }
       }
     } catch {
       /* ignore */
     }
   }
-  const all = discoverAllProviders(ctx)
   if (all.length > 0) return all[0].id
+  if (isAgyCliAvailable()) return 'agy-cli'
   return 'nine-router'
 }
 
