@@ -1,0 +1,23 @@
+# Antigravity CLI (agy) LLM Provider bundle for DeepSeek Harness.
+# Registers the `agy-cli` provider route directly via `ctx.llm.registerAdapter`.
+- insert:
+    - id: agy-provider
+      name: "@local/agy-provider"
+      config:
+        # Provider route id registered in DeepSeek Harness LLM registry
+        provider: agy-cli
+        displayName: Antigravity CLI (agy)
+        # Optional explicit path to agy.exe / agy binary (auto-detected if empty)
+        binaryPath: ""
+        # Default execution mode:
+        # - "dsh-bridge": agy acts as the LLM inference engine and delegates tool execution to DSH UI/runtime
+        # - "agy-agent": autonomous agy CLI agent mode (like tm-agy-tele) with --conversation session persistence
+        mode: dsh-bridge
+        # Also expose `agent/<model-id>` entries in the model selector so users can switch to autonomous agy agent mode per chat
+        includeAgentPresetModels: true
+        # Print timeout in seconds per turn (default 900s = 15 minutes)
+        printTimeoutSeconds: 900
+        # Pass --dangerously-skip-permissions in autonomous agy-agent mode so headless turns never block on stdin
+        skipPermissionsInAgentMode: true
+        # Stream live reasoning thoughts from ~/.gemini/antigravity-cli/brain/<conv_id>/.system_generated/logs/transcript.jsonl
+        streamThinkingFromTranscript: true

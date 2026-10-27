@@ -1,0 +1,15 @@
+# Provider usage bundle: one Host row serving the provider quota snapshot and
+# one Client cell rendering it below the conversation composer.
+- insert:
+    - id: provider-usage
+      name: "@local/provider-usage"
+      config:
+        # Provider route id as declared by the llm-pi-ai `providers` map.
+        # Set to 'auto' to automatically detect the currently active default model provider
+        # (e.g. nine-router or dattio-ai).
+        provider: auto
+        # Quota endpoint path appended to the provider baseURL; or set quotaURL
+        # to an absolute URL to bypass baseURL composition entirely.
+        quotaPath: /quota
+        refreshSeconds: 60
+        timeoutMs: 10000

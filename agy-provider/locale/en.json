@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Antigravity CLI (agy) Provider",
+    "description": "Use Google Antigravity CLI (agy) as a native LLM provider in DeepSeek Harness with Dual-Mode support (DSH-Native Tool Bridge and Autonomous agy Agent), live reasoning stream, and transcript recovery."
+  }
+}

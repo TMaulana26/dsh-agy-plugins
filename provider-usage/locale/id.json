@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Pemakaian Provider",
+    "description": "Menampilkan kuota token dan batas laju provider model secara langsung (9Router dan Dattio AI) di menu Pengaturan, Sidebar Kanan (Ctrl+Alt+B), dan Composer Dock."
+  }
+}

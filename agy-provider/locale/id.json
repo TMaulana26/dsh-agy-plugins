@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Provider Antigravity CLI (agy)",
+    "description": "Gunakan Google Antigravity CLI (agy) sebagai provider LLM bawaan di DeepSeek Harness dengan dukungan Dual-Mode (DSH-Native Tool Bridge dan Autonomous agy Agent), streaming penalaran langsung, serta pemulihan transkrip otomatis."
+  }
+}

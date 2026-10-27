@@ -1,0 +1,10 @@
+/.swarm/
+/.TODO
+.TODO
+/.impeccable/
+preview-harness.html
+regions.json
+DESIGN.md
+PRODUCT.md
+node_modules/
+.DS_Store

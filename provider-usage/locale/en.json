@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Provider Usage",
+    "description": "Live token quota and rate limits for configured model providers (9Router and Dattio AI), integrated into Settings, Right Sidebar (Ctrl+Alt+B), and the Composer Dock."
+  }
+}
