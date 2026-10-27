@@ -71,8 +71,10 @@ foreach ($plugin in $plugins) {
 }
 $pkg.dsh.profile.bundles = $bundles.ToArray()
 
-$pkg | ConvertTo-Json -Depth 10 | Set-Content -Path $pkgJsonPath -Encoding UTF8
-Write-Host "[+] Berhasil memperbarui $pkgJsonPath" -ForegroundColor Green
+$jsonContent = $pkg | ConvertTo-Json -Depth 10
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText($pkgJsonPath, $jsonContent, $utf8NoBom)
+Write-Host "[+] Berhasil memperbarui $pkgJsonPath (UTF-8 tanpa BOM)" -ForegroundColor Green
 
 # 3. Restart DeepSeek Harness jika sedang berjalan
 $dshExe = Join-Path $env:LOCALAPPDATA "Programs\DeepSeek Harness\DeepSeek Harness.exe"
