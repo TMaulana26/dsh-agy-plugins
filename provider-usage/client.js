@@ -146,7 +146,7 @@ window.__ModuleLoader__.load({
       '.dpu-switcher{display:flex;gap:8px;align-items:center;flex-wrap:wrap}',
       '.dpu-tab{appearance:none;border:1px solid var(--dsw-alias-border-l1,#2a3546);background:var(--dsw-alias-bg-layer-1,#18202c);color:var(--dsw-alias-label-secondary,#94a3b8);font-size:13px;font-weight:500;padding:7px 14px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:all .18s cubic-bezier(.16,1,.3,1)}',
       '.dpu-tab:hover{color:var(--dsw-alias-label-primary,#f1f5f9);border-color:var(--dsw-alias-border-l2,#3b4a61);background:var(--dsw-alias-bg-layer-2,#1f2937)}',
-      '.dpu-tab[data-active="true"]{background:rgba(59,130,246,.16);color:var(--dsw-alias-label-primary,#ffffff);border-color:var(--dsw-alias-brand-primary,#4b6bfb);font-weight:600;box-shadow:inset 0 0 0 1px rgba(75,107,251,.25)}',
+      '.dpu-tab[data-active="true"]{background:rgba(59,130,246,.16);color:var(--dsw-alias-label-primary,#ffffff);border-color:#4b6bfb;font-weight:600;box-shadow:inset 0 0 0 1px rgba(75,107,251,.25)}',
       '.dpu-tab-mark{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;font-size:11px;font-weight:700;background:rgba(99,102,241,.22);color:#818cf8;flex:0 0 auto}',
       '.dpu-tab[data-active="true"] .dpu-tab-mark{background:rgba(75,107,251,.32);color:#93c5fd}',
       '.dpu-tab-meta{opacity:.85;font-weight:400}',
@@ -969,6 +969,49 @@ window.__ModuleLoader__.load({
             }
           }
         }, 'provider-usage: styles')
+
+        // Inject custom Settings Nav Icons for Quota & Skills
+        ctx.effect(() => {
+          if (typeof document === 'undefined' || !document.body) return
+          const SKILLS_SVG =
+            '<rect x="2" y="2" width="5" height="5" rx="1.2" stroke="currentColor" stroke-width="1.35"/>' +
+            '<rect x="2" y="9" width="5" height="5" rx="1.2" stroke="currentColor" stroke-width="1.35"/>' +
+            '<rect x="9" y="9" width="5" height="5" rx="1.2" stroke="currentColor" stroke-width="1.35"/>' +
+            '<path d="M11.5 1.5L12.2 3.7L14.4 4.4L12.2 5.1L11.5 7.3L10.8 5.1L8.6 4.4L10.8 3.7L11.5 1.5Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/>'
+          const QUOTA_SVG =
+            '<path d="M2.2 11.8a6 6 0 1 1 11.6 0" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>' +
+            '<path d="M8 9.5L11.2 5.8" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>' +
+            '<circle cx="8" cy="9.5" r="1.25" stroke="currentColor" stroke-width="1.3"/>' +
+            '<path d="M4.5 13.2h7" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>'
+          const patchNav = () => {
+            const buttons = document.querySelectorAll('[data-shortcut-modal="settings"] nav button')
+            for (const btn of buttons) {
+              const labelEl = btn.querySelector('span')
+              const svgEl = btn.querySelector('svg')
+              if (!labelEl || !svgEl) continue
+              const text = (labelEl.textContent || '').trim()
+              if (text === 'Quota & Usage' || text === 'Kuota & Pemakaian') {
+                if (svgEl.getAttribute('data-dsh-custom-icon') !== 'quota') {
+                  svgEl.setAttribute('viewBox', '0 0 16 16')
+                  svgEl.setAttribute('fill', 'none')
+                  svgEl.setAttribute('data-dsh-custom-icon', 'quota')
+                  svgEl.innerHTML = QUOTA_SVG
+                }
+              } else if (text === 'Skills' || text === 'Manajer Skill') {
+                if (svgEl.getAttribute('data-dsh-custom-icon') !== 'skills') {
+                  svgEl.setAttribute('viewBox', '0 0 16 16')
+                  svgEl.setAttribute('fill', 'none')
+                  svgEl.setAttribute('data-dsh-custom-icon', 'skills')
+                  svgEl.innerHTML = SKILLS_SVG
+                }
+              }
+            }
+          }
+          patchNav()
+          const obs = new MutationObserver(() => patchNav())
+          obs.observe(document.body, { childList: true, subtree: true })
+          return () => obs.disconnect()
+        }, 'provider-usage: settings nav icons')
 
         const locale = ctx.locale ?? ctx.get('locale')
         let t = (key) => DICTIONARIES.en[key] ?? key

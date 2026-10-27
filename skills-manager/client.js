@@ -154,14 +154,14 @@ window.__ModuleLoader__.load({
       '.dsm-nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}',
       '.dsm-nav-tab{appearance:none;border:1px solid var(--dsw-alias-border-l1,#2a3546);background:var(--dsw-alias-bg-layer-1,#18202c);color:var(--dsw-alias-label-secondary,#94a3b8);font-size:12.5px;font-weight:500;padding:7px 13px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .16s cubic-bezier(.16,1,.3,1)}',
       '.dsm-nav-tab:hover{color:var(--dsw-alias-label-primary,#f1f5f9);border-color:var(--dsw-alias-border-l2,#3b4a61)}',
-      '.dsm-nav-tab[data-active="true"]{background:rgba(79,70,229,.18);color:var(--dsw-alias-label-primary,#ffffff);border-color:var(--dsw-alias-brand-primary,#6366f1);font-weight:600}',
+      '.dsm-nav-tab[data-active="true"]{background:rgba(79,70,229,.2);color:var(--dsw-alias-label-primary,#ffffff);border-color:#6366f1;font-weight:600}',
       '.dsm-count-pill{font-size:11px;font-variant-numeric:tabular-nums;padding:1px 6px;border-radius:999px;background:rgba(148,163,184,.16);color:var(--dsw-alias-label-primary,#e2e8f0)}',
-      '.dsm-btn{appearance:none;border:1px solid var(--dsw-alias-border-l1,#2e3a4c);background:var(--dsw-alias-bg-layer-1,#1c2430);color:var(--dsw-alias-label-primary,#e2e8f0);font-size:12px;font-weight:500;padding:6px 12px;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:all .16s cubic-bezier(.16,1,.3,1)}',
+      '.dsm-btn{appearance:none;border:1px solid var(--dsw-alias-border-l1,#2e3a4c);background:var(--dsw-alias-bg-layer-1,#1c2430);color:var(--dsw-alias-label-primary,#e2e8f0);font-size:12px;font-weight:500;padding:6px 12px;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;flex:0 0 auto;transition:all .16s cubic-bezier(.16,1,.3,1)}',
       '.dsm-btn:hover:not(:disabled){background:var(--dsw-alias-bg-layer-2,#253040);border-color:var(--dsw-alias-border-l2,#475569)}',
       '.dsm-btn:active:not(:disabled){transform:scale(.98)}',
       '.dsm-btn:disabled{opacity:.45;cursor:default}',
-      '.dsm-btn-primary{background:var(--dsw-alias-brand-primary,#4f46e5);border-color:var(--dsw-alias-brand-primary,#4f46e5);color:#ffffff}',
-      '.dsm-btn-primary:hover:not(:disabled){background:#4338ca;border-color:#4338ca}',
+      '.dsm-btn.dsm-btn-primary{background:#4f46e5!important;border-color:#6366f1!important;color:#ffffff!important;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.25)}',
+      '.dsm-btn.dsm-btn-primary:hover:not(:disabled){background:#4338ca!important;border-color:#818cf8!important;color:#ffffff!important}',
       '.dsm-btn-danger{color:var(--dsw-alias-state-error-primary,#ef4444);border-color:rgba(239,68,68,.3)}',
       '.dsm-btn-danger:hover:not(:disabled){background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.55)}',
       '.dsm-target-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 14px;border-radius:9px;background:var(--dsw-alias-bg-layer-1,#161e29);border:1px solid var(--dsw-alias-border-l1,#283344)}',
@@ -171,27 +171,29 @@ window.__ModuleLoader__.load({
       '.dsm-scope-chip:hover{border-color:var(--dsw-alias-border-l2,#475569);color:var(--dsw-alias-label-primary,#f1f5f9)}',
       '.dsm-scope-chip[data-selected="true"]{background:rgba(44,201,133,.16);border-color:rgba(44,201,133,.55);color:var(--dsw-alias-state-success-primary,#2cc985);font-weight:600}',
       '.dsm-filter-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}',
-      '.dsm-input{flex:1 1 220px;min-width:160px;background:var(--dsw-alias-bg-layer-1,#141b24);border:1px solid var(--dsw-alias-border-l1,#2a3546);color:var(--dsw-alias-label-primary,#f1f5f9);border-radius:7px;padding:7px 11px;font-size:12.5px;outline:none;box-sizing:border-box}',
-      '.dsm-input:focus{border-color:var(--dsw-alias-brand-primary,#6366f1)}',
-      '.dsm-textarea{width:100%;min-height:170px;font-family:var(--dsw-alias-font-mono,monospace);background:var(--dsw-alias-bg-layer-1,#141b24);border:1px solid var(--dsw-alias-border-l1,#2a3546);color:var(--dsw-alias-label-primary,#f1f5f9);border-radius:7px;padding:9px 11px;font-size:12px;line-height:1.5;outline:none;box-sizing:border-box;resize:vertical}',
-      '.dsm-textarea:focus{border-color:var(--dsw-alias-brand-primary,#6366f1)}',
+      '.dsm-input{width:100%;height:36px;flex:none;background:var(--dsw-alias-bg-layer-1,#141b24);border:1px solid var(--dsw-alias-border-l1,#2a3546);color:var(--dsw-alias-label-primary,#f1f5f9);border-radius:7px;padding:0 11px;font-size:12.5px;line-height:34px;outline:none;box-sizing:border-box}',
+      '.dsm-filter-bar>.dsm-input{flex:1 1 220px;width:auto;min-width:160px}',
+      '.dsm-input:focus{border-color:#6366f1}',
+      '.dsm-textarea{width:100%;min-height:170px;flex:none;font-family:var(--dsw-alias-font-mono,monospace);background:var(--dsw-alias-bg-layer-1,#141b24);border:1px solid var(--dsw-alias-border-l1,#2a3546);color:var(--dsw-alias-label-primary,#f1f5f9);border-radius:7px;padding:9px 11px;font-size:12px;line-height:1.5;outline:none;box-sizing:border-box;resize:vertical}',
+      '.dsm-textarea-desc{min-height:68px;font-family:inherit;font-size:12.5px;line-height:1.45}',
+      '.dsm-textarea:focus{border-color:#6366f1}',
       '.dsm-pill-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}',
       '.dsm-sub-pill{appearance:none;border:1px solid var(--dsw-alias-border-l1,#283344);background:transparent;color:var(--dsw-alias-label-secondary,#94a3b8);font-size:11.5px;padding:4px 10px;border-radius:999px;cursor:pointer;transition:all .15s ease}',
       '.dsm-sub-pill:hover{color:var(--dsw-alias-label-primary,#f1f5f9);border-color:var(--dsw-alias-border-l2,#3e4e68)}',
-      '.dsm-sub-pill[data-active="true"]{background:var(--dsw-alias-bg-layer-2,#243042);color:var(--dsw-alias-label-primary,#ffffff);border-color:var(--dsw-alias-brand-primary,#6366f1);font-weight:600}',
+      '.dsm-sub-pill[data-active="true"]{background:var(--dsw-alias-bg-layer-2,#243042);color:var(--dsw-alias-label-primary,#ffffff);border-color:#6366f1;font-weight:600}',
       '.dsm-list{display:flex;flex-direction:column;gap:9px}',
       '.dsm-card{display:flex;flex-direction:column;gap:8px;padding:13px 15px;border-radius:9px;background:var(--dsw-alias-bg-layer-1,#18202a);border:1px solid var(--dsw-alias-border-l1,#283344);transition:border-color .16s ease}',
       '.dsm-card:hover{border-color:var(--dsw-alias-border-l2,#38475e)}',
-      '.dsm-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}',
-      '.dsm-card-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0}',
+      '.dsm-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:nowrap}',
+      '.dsm-card-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex:1 1 0%;min-width:0}',
       '.dsm-skill-name{font-family:var(--dsw-alias-font-mono,monospace);font-size:13.5px;font-weight:600;color:var(--dsw-alias-label-primary,#ffffff);background:rgba(99,102,241,.14);border:1px solid rgba(99,102,241,.3);padding:2px 8px;border-radius:6px}',
       '.dsm-badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:999px;background:var(--dsw-alias-bg-layer-2,#232f40);color:var(--dsw-alias-label-secondary,#94a3b8);border:1px solid var(--dsw-alias-border-l1,#2f3d52);white-space:nowrap}',
       '.dsm-badge-ok{background:rgba(44,201,133,.14);color:var(--dsw-alias-state-success-primary,#2cc985);border-color:rgba(44,201,133,.35)}',
       '.dsm-badge-info{background:rgba(59,130,246,.14);color:#60a5fa;border-color:rgba(59,130,246,.35)}',
       '.dsm-desc{font-size:12.5px;color:var(--dsw-alias-label-secondary,#cbd5e1);line-height:1.45;word-break:break-word}',
       '.dsm-card-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding-top:4px;border-top:1px dashed rgba(148,163,184,.12)}',
-      '.dsm-editor{display:flex;flex-direction:column;gap:10px;padding:15px;border-radius:10px;background:var(--dsw-alias-bg-layer-2,#1c2533);border:1px solid var(--dsw-alias-brand-primary,#6366f1)}',
-      '.dsm-field{display:flex;flex-direction:column;gap:4px}',
+      '.dsm-editor{display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:10px;background:var(--dsw-alias-bg-layer-2,#1c2533);border:1px solid #6366f1}',
+      '.dsm-field{display:flex;flex-direction:column;gap:5px}',
       '.dsm-label{font-size:11.5px;font-weight:600;color:var(--dsw-alias-label-secondary,#94a3b8)}',
       '.dsm-msg{padding:9px 12px;border-radius:8px;font-size:12px;background:rgba(44,201,133,.14);border:1px solid rgba(44,201,133,.35);color:var(--dsw-alias-state-success-primary,#2cc985)}',
       '.dsm-err{padding:9px 12px;border-radius:8px;font-size:12px;background:rgba(239,68,68,.14);border:1px solid rgba(239,68,68,.35);color:var(--dsw-alias-state-error-primary,#ef4444)}',
@@ -239,6 +241,44 @@ window.__ModuleLoader__.load({
       if (num >= 1e6) return `${(num / 1e6).toFixed(1).replace(/\.0$/, '')}M`
       if (num >= 1e3) return `${(num / 1e3).toFixed(1).replace(/\.0$/, '')}K`
       return String(num)
+    }
+
+    const SKILLS_NAV_SVG =
+      '<rect x="2" y="2" width="5" height="5" rx="1.2" stroke="currentColor" stroke-width="1.35"/>' +
+      '<rect x="2" y="9" width="5" height="5" rx="1.2" stroke="currentColor" stroke-width="1.35"/>' +
+      '<rect x="9" y="9" width="5" height="5" rx="1.2" stroke="currentColor" stroke-width="1.35"/>' +
+      '<path d="M11.5 1.5L12.2 3.7L14.4 4.4L12.2 5.1L11.5 7.3L10.8 5.1L8.6 4.4L10.8 3.7L11.5 1.5Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/>'
+
+    const QUOTA_NAV_SVG =
+      '<path d="M2.2 11.8a6 6 0 1 1 11.6 0" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>' +
+      '<path d="M8 9.5L11.2 5.8" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>' +
+      '<circle cx="8" cy="9.5" r="1.25" stroke="currentColor" stroke-width="1.3"/>' +
+      '<path d="M4.5 13.2h7" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>'
+
+    function patchSettingsNavIcons() {
+      if (typeof document === 'undefined') return
+      const buttons = document.querySelectorAll('[data-shortcut-modal="settings"] nav button')
+      for (const btn of buttons) {
+        const labelEl = btn.querySelector('span')
+        const svgEl = btn.querySelector('svg')
+        if (!labelEl || !svgEl) continue
+        const text = (labelEl.textContent || '').trim()
+        if (text === 'Skills' || text === 'Manajer Skill') {
+          if (svgEl.getAttribute('data-dsh-custom-icon') !== 'skills') {
+            svgEl.setAttribute('viewBox', '0 0 16 16')
+            svgEl.setAttribute('fill', 'none')
+            svgEl.setAttribute('data-dsh-custom-icon', 'skills')
+            svgEl.innerHTML = SKILLS_NAV_SVG
+          }
+        } else if (text === 'Quota & Usage' || text === 'Kuota & Pemakaian') {
+          if (svgEl.getAttribute('data-dsh-custom-icon') !== 'quota') {
+            svgEl.setAttribute('viewBox', '0 0 16 16')
+            svgEl.setAttribute('fill', 'none')
+            svgEl.setAttribute('data-dsh-custom-icon', 'quota')
+            svgEl.innerHTML = QUOTA_NAV_SVG
+          }
+        }
+      }
     }
 
     function SkillsManagerView({ mode, t }) {
@@ -317,6 +357,7 @@ window.__ModuleLoader__.load({
       }, [])
 
       React.useEffect(() => {
+        patchSettingsNavIcons()
         loadOverview()
       }, [loadOverview])
 
@@ -607,9 +648,9 @@ window.__ModuleLoader__.load({
             ),
             h('div', { className: 'dsm-field' },
               h('label', { className: 'dsm-label' }, t('fieldDesc')),
-              h('input', {
-                type: 'text',
-                className: 'dsm-input',
+              h('textarea', {
+                className: 'dsm-textarea dsm-textarea-desc',
+                rows: 3,
                 placeholder: 'Describe what this skill does and when the AI agent should use it…',
                 value: editorState.description,
                 onChange: (e) => setEditorState({ ...editorState, description: e.target.value }),
@@ -1024,6 +1065,14 @@ window.__ModuleLoader__.load({
             }
           }
         }, 'skills-manager: styles')
+
+        ctx.effect(() => {
+          if (typeof document === 'undefined' || !document.body) return
+          patchSettingsNavIcons()
+          const obs = new MutationObserver(() => patchSettingsNavIcons())
+          obs.observe(document.body, { childList: true, subtree: true })
+          return () => obs.disconnect()
+        }, 'skills-manager: settings nav icons')
 
         const locale = ctx.locale ?? ctx.get('locale')
         let t = (key) => DICTIONARIES.en[key] ?? key
